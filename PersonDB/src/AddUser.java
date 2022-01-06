@@ -5,6 +5,7 @@ import java.util.Locale;
 import java.util.Scanner;
 
 public class AddUser extends Person{
+    SerializationHelper helper = new SerializationHelper();
 
     public void captureNewUser()  {
         Scanner getPersonDetails = new Scanner(System.in);
@@ -68,11 +69,13 @@ public class AddUser extends Person{
 
             }while(!validateDoB(getUserDOB()));
 
-            ArrayList<String> storePersonDetails = new ArrayList<>();
+            ArrayList<String> storePersonDetails = (ArrayList<String>) helper.deserializeFromFile("PersonDB.txt");;
             storePersonDetails.add(getUserEmail());
             storePersonDetails.add(getUserName());
             storePersonDetails.add(getUserSurname());
             storePersonDetails.add(getUserDOB());
+
+            helper.serialiseToFile(storePersonDetails, "personDB.txt");
 
             for(String str: storePersonDetails) {
                 writeToFile.write(str + " ");
